@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
 import { Request, Response } from 'express';
+import { CreateUser } from '../dtos/CreateUser.dto';
 
 @Controller('users')
 export class UsersController {
 
+//get req method with root path
     @Get()
     getUsers(){
         return [{
@@ -11,7 +13,7 @@ export class UsersController {
             email: "shahabm298@gmail.com"
         }]
     }
-
+//get request method with /posts path
     @Get('posts')
     getUsersPosts(){
         return [{
@@ -30,9 +32,19 @@ export class UsersController {
         }]
     }
 
+
+//post req method with root path and req & rea decoraters 
     @Post()
     createUser(@Req() request:Request, @Res() response:Response){
         console.log(request.body)
         response.send('Created')
+    }
+
+    // Request with body and Data Transfer Object DTOs
+
+    @Post('create')
+    create(@Body() userPayload: CreateUser){
+        console.log(userPayload)
+        return {}
     }
 }
